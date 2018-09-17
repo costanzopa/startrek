@@ -1,0 +1,23 @@
+
+Se utilizan coordenadas cartesianas derivdas de las
+coordenadas polares.
+
+w = velocidad angular
+t = tiempo medido en dias.
+x0 e y0 = es el punto del origen del plano donde esta el sol (0,0).
+
+Se utilizaran dos decimales significativos.
+	           	^
+	           	|  y+
+	           	|
+	           	|
+	           	|
+	            |
+x-	<--------------------------> x+
+
+
+x = x0 + r.cos(wt)
+y = y0 + r.sen(wt)
+
+
+// Se considera dentro de la figura los puntos interiores y no los bordes
