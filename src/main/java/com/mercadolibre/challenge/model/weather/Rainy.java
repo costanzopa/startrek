@@ -8,7 +8,7 @@ import java.util.List;
  * Created by costa on 17/9/2018.
  */
 public class Rainy extends Weather implements IWeather {
-    private static final String RAINY_WEATHER = "drought";
+    private static final String RAINY_WEATHER = "lluvia";
 
     public Rainy(List<CelestialBody> planets, CelestialBody sun) {
         super(planets, sun);

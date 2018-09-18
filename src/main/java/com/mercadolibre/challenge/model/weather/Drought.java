@@ -12,7 +12,7 @@ import java.util.List;
  */
 public class Drought extends Weather implements IWeather {
 
-    private static final String DROUGHT_WEATHER = "drought";
+    private static final String DROUGHT_WEATHER = "sequia";
 
     public Drought(List<CelestialBody> planets, CelestialBody sun) {
         super(planets, sun);
