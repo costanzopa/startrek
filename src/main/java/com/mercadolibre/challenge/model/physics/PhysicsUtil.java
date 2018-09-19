@@ -1,6 +1,5 @@
 package com.mercadolibre.challenge.model.physics;
 
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -57,7 +56,7 @@ public class PhysicsUtil {
             b2 = sign(coordinate, triangle.get(1), triangle.get(2)) < 0.00f;
             b3 = sign(coordinate, triangle.get(2), triangle.get(0)) < 0.00f;
 
-            return ((b1 == b2) && (b2 == b3));
+            isInside = ((b1 == b2) && (b2 == b3));
         }
 
         return isInside;

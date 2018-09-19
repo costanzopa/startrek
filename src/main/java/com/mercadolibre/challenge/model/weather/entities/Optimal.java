@@ -7,13 +7,18 @@ import java.util.List;
 /**
  * Created by costa on 17/9/2018.
  */
-public class Normal extends Weather implements IWeather{
+public class Optimal extends Weather implements IWeather{
+    //TODO REFACTOR HARDCODE
+    private static final String OPTIMAL_WEATHER = "optimo";
 
-    private static final String NORMAL_WEATHER = "normal";
+    public Optimal() {
+        super();
+        this.setName(OPTIMAL_WEATHER);
+    }
 
-    public Normal(List<CelestialBody> planets, CelestialBody sun) {
+    public Optimal(List<CelestialBody> planets, CelestialBody sun) {
         super(planets, sun);
-        this.setName(NORMAL_WEATHER);
+        this.setName(OPTIMAL_WEATHER);
     }
 
     @Override

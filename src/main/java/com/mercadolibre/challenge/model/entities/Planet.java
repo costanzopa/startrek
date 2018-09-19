@@ -10,8 +10,4 @@ public class Planet extends CelestialBody {
     public Planet(String name, Coordinate coordinate, int angularSpeed) {
         super(name, coordinate, angularSpeed);
     }
-
-    public Planet() {
-        super();
-    }
 }

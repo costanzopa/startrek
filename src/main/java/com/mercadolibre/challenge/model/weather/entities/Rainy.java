@@ -13,6 +13,11 @@ import java.util.List;
 public class Rainy extends Weather implements IWeather {
     private static final String RAINY_WEATHER = "lluvia";
 
+    public Rainy() {
+        super();
+        this.setName(RAINY_WEATHER);
+    }
+
     public Rainy(List<CelestialBody> planets, CelestialBody sun) {
         super(planets, sun);
         this.setName(RAINY_WEATHER);

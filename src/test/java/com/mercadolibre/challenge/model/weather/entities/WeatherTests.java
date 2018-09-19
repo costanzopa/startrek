@@ -1,13 +1,9 @@
-package com.mercadolibre.challenge.model.weather;
+package com.mercadolibre.challenge.model.weather.entities;
 
 import com.mercadolibre.challenge.model.entities.CelestialBody;
 import com.mercadolibre.challenge.model.entities.Planet;
 import com.mercadolibre.challenge.model.entities.Sun;
 import com.mercadolibre.challenge.model.physics.Coordinate;
-import com.mercadolibre.challenge.model.weather.entities.Drought;
-import com.mercadolibre.challenge.model.weather.entities.IWeather;
-import com.mercadolibre.challenge.model.weather.entities.Normal;
-import com.mercadolibre.challenge.model.weather.entities.Rainy;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -80,7 +76,7 @@ public class WeatherTests {
      * All planets are collinear
      */
     @Test
-    public void checkIsNormalDayAssertTrue() {
+    public void checkIsOptimalDayAssertTrue() {
         planets = new ArrayList<>();
         Coordinate c1 = new Coordinate(1.0,1.0);
         Coordinate c2 = new Coordinate(-1.0,1.0);
@@ -92,7 +88,7 @@ public class WeatherTests {
         planets.add(ferengi);
         planets.add(vulcano);
         planets.add(betasoide);
-        weather = new Normal(planets, sun);
+        weather = new Optimal(planets, sun);
 
         assertTrue(weather.evaluate());
     }
@@ -102,14 +98,14 @@ public class WeatherTests {
      * All planets are collinear
      */
     @Test
-    public void checkIsNormalDayAssertFalse() {
+    public void checkIsOptimalDayAssertFalse() {
         planets = new ArrayList<>();
 
         planets.add(ferengi);
         vulcano.getLocation(58);
         planets.add(vulcano);
         planets.add(betasoide);
-        weather = new Normal(planets, sun);
+        weather = new Optimal(planets, sun);
 
         assertFalse(weather.evaluate());
     }

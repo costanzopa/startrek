@@ -94,4 +94,9 @@ public abstract class Weather {
         WeatherPrediction weatherPrediction = new WeatherPrediction(this.getName(), this.getRainFall());
         return weatherPrediction;
     }
+
+    public void setParameters(List<CelestialBody> planets, CelestialBody sun) {
+        this.setPlanets(planets);
+        this.setSun(sun);
+    }
 }
