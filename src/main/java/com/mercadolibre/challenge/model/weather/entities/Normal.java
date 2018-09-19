@@ -1,4 +1,4 @@
-package com.mercadolibre.challenge.model.weather;
+package com.mercadolibre.challenge.model.weather.entities;
 
 import com.mercadolibre.challenge.model.entities.CelestialBody;
 
@@ -17,7 +17,7 @@ public class Normal extends Weather implements IWeather{
     }
 
     @Override
-    public boolean hasThisWeather() {
+    public boolean evaluate() {
         return (this.planetsAreCollinear()&& !this.planetsAreCollinearWithSun());
     }
 

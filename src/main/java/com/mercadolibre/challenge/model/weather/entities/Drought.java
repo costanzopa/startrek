@@ -1,10 +1,6 @@
-package com.mercadolibre.challenge.model.weather;
+package com.mercadolibre.challenge.model.weather.entities;
 
 import com.mercadolibre.challenge.model.entities.CelestialBody;
-import com.mercadolibre.challenge.model.physics.Coordinate;
-import com.mercadolibre.challenge.model.physics.PhysicsUtil;
-
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,7 +16,8 @@ public class Drought extends Weather implements IWeather {
     }
 
     @Override
-    public boolean hasThisWeather() {
+    public boolean evaluate() {
         return (this.planetsAreCollinear() && this.planetsAreCollinearWithSun());
     }
+
 }

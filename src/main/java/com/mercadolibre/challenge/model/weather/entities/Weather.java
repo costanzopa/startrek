@@ -1,9 +1,9 @@
-package com.mercadolibre.challenge.model.weather;
+package com.mercadolibre.challenge.model.weather.entities;
 
 import com.mercadolibre.challenge.model.entities.CelestialBody;
-import com.mercadolibre.challenge.model.entities.Planet;
 import com.mercadolibre.challenge.model.physics.Coordinate;
 import com.mercadolibre.challenge.model.physics.PhysicsUtil;
+import com.mercadolibre.challenge.model.weather.report.WeatherPrediction;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,10 +15,16 @@ public abstract class Weather {
     private String name;
     private List<CelestialBody> planets;
     private CelestialBody sun;
+    private double rainFall;
+
+    public Weather() {
+        this.setRainFall(0);
+    }
 
     public Weather(List<CelestialBody> cb1, CelestialBody cb2) {
         this.setPlanets(cb1);
         this.setSun(cb2);
+        this.setRainFall(0);
     }
 
     public String getName() {
@@ -74,5 +80,18 @@ public abstract class Weather {
             areCollinear = PhysicsUtil.areCollinear(planetsWithSun);
         }
         return areCollinear;
+    }
+
+    public double getRainFall() {
+        return rainFall;
+    }
+
+    public void setRainFall(double rainFall) {
+        this.rainFall = rainFall;
+    }
+
+    public WeatherPrediction getWeatherPrediction() {
+        WeatherPrediction weatherPrediction = new WeatherPrediction(this.getName(), this.getRainFall());
+        return weatherPrediction;
     }
 }

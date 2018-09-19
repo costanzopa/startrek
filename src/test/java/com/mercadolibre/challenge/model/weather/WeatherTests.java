@@ -4,6 +4,10 @@ import com.mercadolibre.challenge.model.entities.CelestialBody;
 import com.mercadolibre.challenge.model.entities.Planet;
 import com.mercadolibre.challenge.model.entities.Sun;
 import com.mercadolibre.challenge.model.physics.Coordinate;
+import com.mercadolibre.challenge.model.weather.entities.Drought;
+import com.mercadolibre.challenge.model.weather.entities.IWeather;
+import com.mercadolibre.challenge.model.weather.entities.Normal;
+import com.mercadolibre.challenge.model.weather.entities.Rainy;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -12,6 +16,7 @@ import java.util.List;
 
 import static junit.framework.TestCase.assertFalse;
 import static junit.framework.TestCase.assertTrue;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 /**
@@ -52,7 +57,7 @@ public class WeatherTests {
         planets.add(betasoide);
         weather = new Drought(planets, sun);
 
-        assertTrue(weather.hasThisWeather());
+        assertTrue(weather.evaluate());
     }
 
 
@@ -68,11 +73,11 @@ public class WeatherTests {
         planets.add(betasoide);
         weather = new Drought(planets, sun);
 
-        assertFalse(weather.hasThisWeather());
+        assertFalse(weather.evaluate());
     }
 
     /***
-     * All planets and sun are collinear
+     * All planets are collinear
      */
     @Test
     public void checkIsNormalDayAssertTrue() {
@@ -89,9 +94,102 @@ public class WeatherTests {
         planets.add(betasoide);
         weather = new Normal(planets, sun);
 
-        assertTrue(weather.hasThisWeather());
+        assertTrue(weather.evaluate());
     }
 
 
+    /***
+     * All planets are collinear
+     */
+    @Test
+    public void checkIsNormalDayAssertFalse() {
+        planets = new ArrayList<>();
+
+        planets.add(ferengi);
+        vulcano.getLocation(58);
+        planets.add(vulcano);
+        planets.add(betasoide);
+        weather = new Normal(planets, sun);
+
+        assertFalse(weather.evaluate());
+    }
+
+    @Test
+    public void checkIsARainyDayAssertTrue() {
+        planets = new ArrayList<>();
+        Coordinate c1 = new Coordinate(0.0,1.0);
+        Coordinate c2 = new Coordinate(-1.0,-1.0);
+        Coordinate c3 = new Coordinate(1.0, -1.0);
+        vulcano = new Planet("vulcano",c1 ,1);
+        betasoide = new Planet("betasoide", c2,-1);
+        ferengi = new Planet("ferengi", c3,1);
+
+        planets.add(ferengi);
+        planets.add(vulcano);
+        planets.add(betasoide);
+        weather = new Rainy(planets, sun);
+
+        assertTrue(weather.evaluate());
+
+    }
+
+    @Test
+    public void checkIsARainyDayAssertFalse() {
+        planets = new ArrayList<>();
+        Coordinate c1 = new Coordinate(0.0,25.0);
+        Coordinate c2 = new Coordinate(-1.0,20.0);
+        Coordinate c3 = new Coordinate(1.0, 20.0);
+        vulcano = new Planet("vulcano",c1 ,1);
+        betasoide = new Planet("betasoide", c2,-1);
+        ferengi = new Planet("ferengi", c3,1);
+
+        planets.add(ferengi);
+        planets.add(vulcano);
+        planets.add(betasoide);
+        weather = new Rainy(planets, sun);
+
+        assertFalse(weather.evaluate());
+
+    }
+
+    @Test
+    public void checkNoRainFallInANoRainyDay() {
+        planets = new ArrayList<>();
+        Coordinate c1 = new Coordinate(0.0,25.0);
+        Coordinate c2 = new Coordinate(-1.0,20.0);
+        Coordinate c3 = new Coordinate(1.0, 20.0);
+        vulcano = new Planet("vulcano",c1 ,1);
+        betasoide = new Planet("betasoide", c2,-1);
+        ferengi = new Planet("ferengi", c3,1);
+
+        planets.add(ferengi);
+        planets.add(vulcano);
+        planets.add(betasoide);
+        weather = new Rainy(planets, sun);
+
+        assertFalse(weather.evaluate());
+        assertEquals(0.00, weather.getRainFall(), 0.001);
+
+    }
+
+    @Test
+    public void checkRainFallInARainyDay() {
+        planets = new ArrayList<>();
+        Coordinate c1 = new Coordinate(0.0,1.0);
+        Coordinate c2 = new Coordinate(-1.0,-1.0);
+        Coordinate c3 = new Coordinate(1.0, -1.0);
+        vulcano = new Planet("vulcano",c1 ,1);
+        betasoide = new Planet("betasoide", c2,-1);
+        ferengi = new Planet("ferengi", c3,1);
+
+        planets.add(ferengi);
+        planets.add(vulcano);
+        planets.add(betasoide);
+        weather = new Rainy(planets, sun);
+
+        assertTrue(weather.evaluate());
+        assertEquals(6.47, weather.getRainFall(), 0.001);
+
+    }
 
 }
