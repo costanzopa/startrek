@@ -2,6 +2,7 @@ package com.mercadolibre.challenge.controller;
 
 import com.mercadolibre.challenge.sevice.IWeatherService;
 import com.mercadolibre.challenge.sevice.WeatherPrediction;
+import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -58,8 +59,10 @@ public class WeatherPredictionController {
     @GetMapping("/countOptimalDays")
     ResponseEntity<WeatherPrediction> getOptimalDays() {
         long optimalDays = weatherService.countOptimalDays();
-        String optimalDaysJSON = "{weather: optimal, count: " + optimalDays+"}";
+        JSONObject json = new JSONObject();
+        json.put("weather", "optimal");
+        json.put("count", optimalDays);
 
-        return new ResponseEntity(optimalDaysJSON, HttpStatus.OK);
+        return new ResponseEntity(json, HttpStatus.OK);
     }
 }
