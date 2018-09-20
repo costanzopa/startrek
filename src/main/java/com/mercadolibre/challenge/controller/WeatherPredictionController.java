@@ -1,12 +1,11 @@
 package com.mercadolibre.challenge.controller;
 
-import com.mercadolibre.challenge.model.weather.report.WeatherPrediction;
-import com.mercadolibre.challenge.repository.WeatherPredictionRepository;
+import com.mercadolibre.challenge.sevice.IWeatherService;
+import com.mercadolibre.challenge.sevice.WeatherPrediction;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -14,20 +13,53 @@ import java.util.List;
  * Created by costa on 20/9/2018.
  */
 @RestController
-@RequestMapping("/weatherPredictions")
+@RequestMapping("/weathers")
 public class WeatherPredictionController {
+
     @Autowired
-    private WeatherPredictionRepository weatherPredictionRepository;
-
-
-    public WeatherPredictionController(WeatherPredictionRepository weatherPredictionRepository) {
-        this.weatherPredictionRepository = weatherPredictionRepository;
-    }
+    private IWeatherService weatherService;
 
     @GetMapping("/all")
-    List<WeatherPrediction> getAll(){
-        List<WeatherPrediction> weatherPredictions = this.weatherPredictionRepository.findAll();
-        return weatherPredictions;
+    ResponseEntity<List<WeatherPrediction>> getAll(){
+        List<WeatherPrediction> weatherPredictions = weatherService.getAll();
+        return new ResponseEntity(weatherPredictions, HttpStatus.OK);
     }
 
+    @PostMapping
+    ResponseEntity<WeatherPrediction> add(@RequestBody WeatherPrediction weatherPrediction) {
+        weatherService.add(weatherPrediction);
+        return new ResponseEntity(weatherPrediction, HttpStatus.OK);
+    }
+
+    @PutMapping
+    ResponseEntity<WeatherPrediction> update(@RequestBody WeatherPrediction weatherPrediction) {
+        weatherService.update(weatherPrediction);
+        return new ResponseEntity(weatherPrediction, HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}")
+    ResponseEntity<WeatherPrediction> get(@PathVariable("id") Integer id) {
+        WeatherPrediction weatherPrediction = weatherService.get(id);
+        return new ResponseEntity(weatherPrediction, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    ResponseEntity<String> delete(@PathVariable("id") Integer id) {
+        weatherService.delete(id);
+        return new ResponseEntity("Success!", HttpStatus.OK);
+    }
+
+    @GetMapping("/maxRainfall")
+    ResponseEntity<WeatherPrediction> getMaxRainFall() {
+        WeatherPrediction weatherPrediction = weatherService.getMaxRainFall();
+        return new ResponseEntity(weatherPrediction, HttpStatus.OK);
+    }
+
+    @GetMapping("/countOptimalDays")
+    ResponseEntity<WeatherPrediction> getOptimalDays() {
+        long optimalDays = weatherService.countOptimalDays();
+        String optimalDaysJSON = "{weather: optimal, count: " + optimalDays+"}";
+
+        return new ResponseEntity(optimalDaysJSON, HttpStatus.OK);
+    }
 }

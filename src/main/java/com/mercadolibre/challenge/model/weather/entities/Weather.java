@@ -3,7 +3,7 @@ package com.mercadolibre.challenge.model.weather.entities;
 import com.mercadolibre.challenge.model.entities.CelestialBody;
 import com.mercadolibre.challenge.model.physics.Coordinate;
 import com.mercadolibre.challenge.model.physics.PhysicsUtil;
-import com.mercadolibre.challenge.model.weather.report.WeatherPrediction;
+import com.mercadolibre.challenge.sevice.WeatherPrediction;
 
 import java.util.ArrayList;
 import java.util.List;

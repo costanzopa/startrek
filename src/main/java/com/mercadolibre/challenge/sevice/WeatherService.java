@@ -1,4 +1,4 @@
-package com.mercadolibre.challenge.model.weather.report;
+package com.mercadolibre.challenge.sevice;
 
 
 import com.mercadolibre.challenge.model.entities.CelestialBody;
@@ -6,6 +6,7 @@ import com.mercadolibre.challenge.model.entities.Galaxy;
 import com.mercadolibre.challenge.model.weather.entities.*;
 import com.mercadolibre.challenge.repository.WeatherPredictionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.List;
@@ -13,8 +14,10 @@ import java.util.List;
 /**
  * Created by costa on 18/9/2018.
  */
-public class WeatherReport {
+@Service
+public class WeatherService implements IWeatherService {
 
+    @Autowired
     private WeatherPredictionRepository weatherPredictionsRepository;
 
     private int beginDate;
@@ -22,11 +25,12 @@ public class WeatherReport {
     private Galaxy galaxy;
     private List<IWeather> weathers;
 
+    public WeatherService() {
 
-    public WeatherReport(WeatherPredictionRepository weatherPredictionsRepository) {
+    }
 
+    public WeatherService(WeatherPredictionRepository weatherPredictionsRepository) {
         this.weatherPredictionsRepository = weatherPredictionsRepository;
-
     }
 
     public void execute() {
@@ -89,5 +93,49 @@ public class WeatherReport {
 
     public Galaxy getGalaxy() {
         return galaxy;
+    }
+
+    @Override
+    public void add(WeatherPrediction weatherPrediction) {
+        this.weatherPredictionsRepository.save(weatherPrediction);
+    }
+
+    @Override
+    public void update(WeatherPrediction prediction) {
+        WeatherPrediction weatherPrediction = this.weatherPredictionsRepository.findWeatherPredictionByDay(prediction.getDay());
+        if(weatherPrediction != null) {
+            weatherPrediction.setRainFall(prediction.getRainFall());
+            weatherPrediction.setWeather(prediction.getWeather());
+            this.weatherPredictionsRepository.save(weatherPrediction);
+        }
+    }
+
+    @Override
+    public void delete(Integer id) {
+        WeatherPrediction weatherPrediction = this.weatherPredictionsRepository.findWeatherPredictionByDay(id);
+        if(weatherPrediction != null) {
+            this.weatherPredictionsRepository.delete(weatherPrediction);
+        }
+    }
+
+    @Override
+    public WeatherPrediction get(Integer id) {
+        return this.weatherPredictionsRepository.findWeatherPredictionByDay(id);
+
+    }
+
+    @Override
+    public List<WeatherPrediction> getAll() {
+        return this.weatherPredictionsRepository.findAll();
+    }
+
+    @Override
+    public WeatherPrediction getMaxRainFall() {
+        return this.weatherPredictionsRepository.findMaxWeatherPrediction();
+    }
+
+    @Override
+    public long countOptimalDays() {
+        return this.weatherPredictionsRepository.countOptimalConditionDays();
     }
 }

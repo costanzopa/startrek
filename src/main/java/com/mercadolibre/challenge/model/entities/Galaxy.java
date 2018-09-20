@@ -26,7 +26,7 @@ public class Galaxy {
         Coordinate c2 = new Coordinate(2000, 0);
         CelestialBody betasoide = new Planet("betasoide", c2, -3);
         Coordinate c3 = new Coordinate(1000, 0);
-        CelestialBody vulcano = new Planet("vulcano", c3, -5);
+        CelestialBody vulcano = new Planet("vulcano", c3, 5);
         this.setSun(new Sun());
         this.setPlanets(Arrays.asList(ferengi, betasoide, vulcano));
     }

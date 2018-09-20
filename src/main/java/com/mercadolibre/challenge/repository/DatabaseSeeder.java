@@ -1,6 +1,6 @@
 package com.mercadolibre.challenge.repository;
 
-import com.mercadolibre.challenge.model.weather.report.WeatherReport;
+import com.mercadolibre.challenge.sevice.WeatherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -16,7 +16,7 @@ public class DatabaseSeeder implements CommandLineRunner{
     @Override
     public void run(String... strings) throws Exception {
 
-        WeatherReport report = new WeatherReport(repository);
+        WeatherService report = new WeatherService(repository);
         report.execute();
     }
 }
