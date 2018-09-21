@@ -1,4 +1,4 @@
-package com.mercadolibre.challenge.model.weather.entities;
+package com.mercadolibre.challenge.model.weather;
 
 import com.mercadolibre.challenge.model.entities.CelestialBody;
 import com.mercadolibre.challenge.model.entities.Planet;

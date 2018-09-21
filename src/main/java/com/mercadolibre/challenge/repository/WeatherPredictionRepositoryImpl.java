@@ -28,9 +28,9 @@ public class WeatherPredictionRepositoryImpl implements WeatherPredictionReposit
     }
 
     @Override
-    public long countOptimalConditionDays() {
+    public long countPeriodsOfWeather(String weather) {
         Query query = new Query();
-        query.addCriteria(Criteria.where("weather").is("optimo"));
+        query.addCriteria(Criteria.where("weather").is(weather));
         return mongoTemplate.count(query, WeatherPrediction.class);
     }
 

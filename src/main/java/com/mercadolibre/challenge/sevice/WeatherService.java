@@ -3,7 +3,7 @@ package com.mercadolibre.challenge.sevice;
 
 import com.mercadolibre.challenge.model.entities.CelestialBody;
 import com.mercadolibre.challenge.model.entities.Galaxy;
-import com.mercadolibre.challenge.model.weather.entities.*;
+import com.mercadolibre.challenge.model.weather.*;
 import com.mercadolibre.challenge.repository.WeatherPredictionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -45,7 +45,7 @@ public class WeatherService implements IWeatherService {
         }
     }
     private void initWeathers() {
-        this.setWeathers(Arrays.asList(new Drought(), new Optimal(), new Rainy(), new Standard()));
+        this.setWeathers(Arrays.asList(new Drought(), new Optimal(), new Rainy(), new Normal()));
     }
 
     private WeatherPrediction getWeatherPrediction(int day) {
@@ -101,21 +101,23 @@ public class WeatherService implements IWeatherService {
     }
 
     @Override
-    public void update(WeatherPrediction prediction) {
+    public WeatherPrediction update(WeatherPrediction prediction) {
         WeatherPrediction weatherPrediction = this.weatherPredictionsRepository.findWeatherPredictionByDay(prediction.getDay());
         if(weatherPrediction != null) {
             weatherPrediction.setRainFall(prediction.getRainFall());
             weatherPrediction.setWeather(prediction.getWeather());
             this.weatherPredictionsRepository.save(weatherPrediction);
         }
+        return weatherPrediction;
     }
 
     @Override
-    public void delete(Integer id) {
+    public WeatherPrediction delete(Integer id) {
         WeatherPrediction weatherPrediction = this.weatherPredictionsRepository.findWeatherPredictionByDay(id);
         if(weatherPrediction != null) {
             this.weatherPredictionsRepository.delete(weatherPrediction);
         }
+        return weatherPrediction;
     }
 
     @Override
@@ -135,7 +137,7 @@ public class WeatherService implements IWeatherService {
     }
 
     @Override
-    public long countOptimalDays() {
-        return this.weatherPredictionsRepository.countOptimalConditionDays();
+    public long countPeriodsOfWeather(String weather) {
+        return this.weatherPredictionsRepository.countPeriodsOfWeather(weather);
     }
 }

@@ -9,5 +9,5 @@ public interface WeatherPredictionRepositoryCustom {
 
     WeatherPrediction findMaxWeatherPrediction();
 
-    long countOptimalConditionDays();
+    long countPeriodsOfWeather(String weather);
 }
