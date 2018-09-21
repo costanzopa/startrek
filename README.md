@@ -1,19 +1,16 @@
  # Startrek
 
- The place where cosmic kites are born.
- A webpage to find all the football fields where the stars (or not) are born.
+ 
+In a distant galaxy, there are three civilizations. Vulcans, Ferengis and Betasoides.
+Each civilization lives in peace on their respective planet.
 
  ## Getting Started
 
- These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
-
+    git clone https://github.com/costanzopa/startrek.git
+    
  ### Prerequisites
-
- What things you need to install the software and how to install them
-
- ```
- Give examples
- ```
+ 
+    You must have installed Git, Maven and Mongodb.
 
  ### Installing
 
@@ -73,9 +70,9 @@
 
  ## Authors
 
- * **Pablo Costanzo** - *Initial work* - [HolyGround](https://github.com/HolyGround)
+ * **Pablo Costanzo** - *Initial work* - [Startrek](https://github.com/costanzopa/startrek)
 
- See also the list of [contributors](https://github.com/costanzopa/HolyGround/contributors) who participated in this project.
+ See also the list of [contributors](https://github.com/costanzopa/startrek/contributors) who participated in this project.
 
  ## License
 
