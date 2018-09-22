@@ -19,7 +19,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/weathers")
-@Api(description = "Set of endpoints for Creating, Retrieving, Updating and Deleting of Weather Predictions.")
+@Api(value="/weathers", description = "Set of endpoints for Creating, Retrieving, Updating and Deleting of Weather Predictions.", produces ="application/json")
 public class WeatherController {
 
     private IWeatherService weatherService;
@@ -28,16 +28,10 @@ public class WeatherController {
         this.weatherService = weatherService;
     }
 
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successfully retrieved list"),
-            @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
-            @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
-            @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
-    }
-    )
 
     @GetMapping(value = "/list", produces = "application/json")
     @ApiOperation("Returns list of all weather predictions in the system.")
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "Successfully retrieved list.", response=WeatherPrediction.class)})
     ResponseEntity<List<WeatherPrediction>> getAll(){
         List<WeatherPrediction> weatherPredictions = weatherService.getAll();
         return new ResponseEntity(weatherPredictions, HttpStatus.OK);
@@ -45,6 +39,7 @@ public class WeatherController {
 
     @PostMapping(value = "/add", produces = "application/json")
     @ApiOperation("Add a new weather prediction.")
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "Successfully retrieved a weather prediction.", response=WeatherPrediction.class)})
     ResponseEntity<WeatherPrediction> add(@RequestBody WeatherPrediction weatherPrediction) {
         weatherService.add(weatherPrediction);
         return new ResponseEntity(weatherPrediction, HttpStatus.OK);
@@ -52,6 +47,9 @@ public class WeatherController {
 
     @PutMapping(value = "/update/{id}", produces = "application/json")
     @ApiOperation("Update a weather prediction.")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully update weather prediction.", response=WeatherPrediction.class),
+            @ApiResponse(code = 404, message = "The resource you were trying to update is not found.")})
     ResponseEntity<WeatherPrediction> update(@RequestBody WeatherPrediction weatherPrediction) {
         weatherService.update(weatherPrediction);
         ResponseEntity responseEntity;
@@ -64,6 +62,9 @@ public class WeatherController {
 
     @GetMapping(value = "/show/{id}", produces = "application/json")
     @ApiOperation("Returns a specific weather prediction by their identifier (day). 404 if does not exist.")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully show weather prediction.", response=WeatherPrediction.class),
+            @ApiResponse(code = 404, message = "The resource you were trying to show is not found.")})
     ResponseEntity<WeatherPrediction> get(@PathVariable("id") Integer id) {
         WeatherPrediction weatherPrediction = weatherService.get(id);
         ResponseEntity responseEntity;
@@ -75,7 +76,10 @@ public class WeatherController {
     }
 
     @DeleteMapping(value = "/delete/{id}", produces = "application/json")
-    @ApiOperation("Deletes a weather prediction from the system. 404 if the prediction's identifier is not found.")
+    @ApiOperation("Deletes a weather prediction from the system.")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully deletec weather prediction.", response=WeatherPrediction.class),
+            @ApiResponse(code = 404, message = "The resource you were trying to delete is not found.")})
     ResponseEntity<String> delete(@PathVariable("id") Integer id) {
         WeatherPrediction weatherPrediction = weatherService.delete(id);
         ResponseEntity responseEntity;
@@ -92,6 +96,7 @@ public class WeatherController {
 
     @GetMapping(value = "/maxRainFall", produces = "application/json")
     @ApiOperation("Get the day when the rain will be maximum.")
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "Successfully retrieved the day that rained most.")})
     ResponseEntity<WeatherPrediction> getMaxRainFall() {
         WeatherPrediction weatherPrediction = weatherService.getMaxRainFall();
         return new ResponseEntity(weatherPrediction, HttpStatus.OK);
@@ -99,6 +104,7 @@ public class WeatherController {
 
     @GetMapping(value = "/countPeriodsOfWeather/{weather}", produces = "application/json")
     @ApiOperation("Counts the periods of a given {weather}.")
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "Successfully retrieved the number of days with a weather.")})
     ResponseEntity<WeatherPrediction> countPeriodsOfWeather(@PathVariable("weather") String weather) {
         long countDays = weatherService.countPeriodsOfWeather(weather);
         JSONObject json = new JSONObject();
