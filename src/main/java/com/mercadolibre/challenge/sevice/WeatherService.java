@@ -12,7 +12,8 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Created by costa on 18/9/2018.
+ * Created by Pablo Costanzo on 18/9/2018.
+ *
  */
 @Service
 public class WeatherService implements IWeatherService {
