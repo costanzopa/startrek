@@ -8,18 +8,18 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 
 /**
- * Created by costa on 20/9/2018.
+ * Created by Pablo Costanzo on 20/9/2018.
+ * Implementation for custom methods of mongo repository
  */
 public class WeatherPredictionRepositoryImpl implements WeatherPredictionRepositoryCustom {
     @Autowired
     MongoTemplate mongoTemplate;
 
     WeatherPredictionRepositoryImpl() {
-
     }
 
     @Override
-    public WeatherPrediction findMaxWeatherPrediction() {
+    public WeatherPrediction findMaxWeatherPredictionRainFall() {
         final Query query = new Query()
                 .limit(1)
                 .with(new Sort(Sort.Direction.DESC, "rainFall"));

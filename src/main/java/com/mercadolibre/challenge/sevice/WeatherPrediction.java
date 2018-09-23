@@ -3,17 +3,12 @@ package com.mercadolibre.challenge.sevice;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.index.IndexDirection;
-import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
-
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 
 /**
- * Created by costa on 17/9/2018.
+ * Created by Pablo Costanzo on 17/9/2018.
+ * Imprementation of IWeatherPrediction
  */
 
 @Document(collection = "weathers")
@@ -29,7 +24,6 @@ public class WeatherPrediction {
     private double rainFall;
 
     public WeatherPrediction(){
-
     }
 
     public WeatherPrediction(double rainFall){

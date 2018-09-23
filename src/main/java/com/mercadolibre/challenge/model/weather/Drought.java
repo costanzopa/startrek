@@ -4,11 +4,12 @@ import com.mercadolibre.challenge.model.entities.CelestialBody;
 import java.util.List;
 
 /**
- * Created by costa on 17/9/2018.
+ * Created by Pablo Costanzo on 17/9/2018.
+ * Drought Day
  */
-public class Drought extends Weather implements IWeather {
+public class Drought extends Weather {
 
-    private static final String DROUGHT_WEATHER = "sequia";
+    private static final String DROUGHT_WEATHER = "drought";
 
     public Drought() {
         super();

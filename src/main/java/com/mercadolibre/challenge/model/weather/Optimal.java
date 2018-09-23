@@ -5,11 +5,11 @@ import com.mercadolibre.challenge.model.entities.CelestialBody;
 import java.util.List;
 
 /**
- * Created by costa on 17/9/2018.
+ * Created by Pablo Costanzo on 17/9/2018.
+ * Model a best condition weather.
  */
 public class Optimal extends Weather implements IWeather{
-    //TODO REFACTOR HARDCODE
-    private static final String OPTIMAL_WEATHER = "optimo";
+    private static final String OPTIMAL_WEATHER = "optimal";
 
     public Optimal() {
         super();

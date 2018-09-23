@@ -9,9 +9,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by costa on 17/9/2018.
+ * Created by Pablo Costanzo on 17/9/2018.
+ * Class to model the weather of a current day.
  */
-public abstract class Weather {
+public abstract class Weather implements IWeather{
     private String name;
     private List<CelestialBody> planets;
     private CelestialBody sun;

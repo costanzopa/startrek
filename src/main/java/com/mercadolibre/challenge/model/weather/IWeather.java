@@ -6,7 +6,8 @@ import com.mercadolibre.challenge.sevice.WeatherPrediction;
 import java.util.List;
 
 /**
- * Created by costa on 17/9/2018.
+ * Created by Pablo Costanzo on 17/9/2018.
+ * Methods to obtain data of the day.
  */
 public interface IWeather {
 

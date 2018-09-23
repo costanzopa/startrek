@@ -6,17 +6,19 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 /**
- * Created by costa on 20/9/2018.
+ * Created by Pablo Costanzo on 20/9/2018.
+ * Initialize the seed database.
  */
 @Component
 public class DatabaseSeeder implements CommandLineRunner{
     @Autowired
-    WeatherPredictionRepository repository;
+    WeatherService report;
+    @Autowired
+    WeatherPredictionRepository weatherPredictionsRepository;
 
     @Override
     public void run(String... strings) throws Exception {
-
-        WeatherService report = new WeatherService(repository);
+        report.setWeatherPredictionsRepository(weatherPredictionsRepository);
         report.execute();
     }
 }

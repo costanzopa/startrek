@@ -1,11 +1,13 @@
 package com.mercadolibre.challenge.sevice;
 
 
+import com.mercadolibre.challenge.config.AppConfig;
 import com.mercadolibre.challenge.model.entities.CelestialBody;
 import com.mercadolibre.challenge.model.entities.Galaxy;
 import com.mercadolibre.challenge.model.weather.*;
 import com.mercadolibre.challenge.repository.WeatherPredictionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
@@ -13,13 +15,20 @@ import java.util.List;
 
 /**
  * Created by Pablo Costanzo on 18/9/2018.
- *
+ * Service for the weather prediction controller
  */
 @Service
+@Configurable
 public class WeatherService implements IWeatherService {
+
+    private final String DEFAULT_WEATHER_NAME = "normal";
+    private final double DEFAULT_WEATHER_RAINFALL = 0.0;
 
     @Autowired
     private WeatherPredictionRepository weatherPredictionsRepository;
+
+    @Autowired
+    private AppConfig config;
 
     private int beginDate;
     private int endDate;
@@ -27,7 +36,6 @@ public class WeatherService implements IWeatherService {
     private List<IWeather> weathers;
 
     public WeatherService() {
-
     }
 
     public WeatherService(WeatherPredictionRepository weatherPredictionsRepository) {
@@ -35,8 +43,8 @@ public class WeatherService implements IWeatherService {
     }
 
     public void execute() {
-        this.setBeginDate(1);
-        this.setEndDate(3650);
+        this.setBeginDate(config.getBeginDate());
+        this.setEndDate(config.getEndDate());
         this.galaxy = Galaxy.getInstance();
         this.initWeathers();
         this.weatherPredictionsRepository.deleteAll();
@@ -50,7 +58,7 @@ public class WeatherService implements IWeatherService {
     }
 
     private WeatherPrediction getWeatherPrediction(int day) {
-        WeatherPrediction weatherPrediction = new WeatherPrediction("normal", 0.0);
+        WeatherPrediction weatherPrediction = new WeatherPrediction(DEFAULT_WEATHER_NAME, DEFAULT_WEATHER_RAINFALL);
         this.getGalaxy().move(day);
         this.updateWeathers(this.getGalaxy().getPlanets(), this.getGalaxy().getSun());
         for(IWeather weather : this.getWeathers()) {
@@ -97,8 +105,15 @@ public class WeatherService implements IWeatherService {
     }
 
     @Override
-    public void add(WeatherPrediction weatherPrediction) {
-        this.weatherPredictionsRepository.save(weatherPrediction);
+    public WeatherPrediction add(WeatherPrediction prediction) {
+        WeatherPrediction weatherPrediction = this.weatherPredictionsRepository.findWeatherPredictionByDay(prediction.getDay());
+        if(weatherPrediction == null) {
+            weatherPrediction = prediction;
+            this.weatherPredictionsRepository.save(prediction);
+        } else {
+            weatherPrediction = null;
+        }
+        return weatherPrediction;
     }
 
     @Override
@@ -134,11 +149,15 @@ public class WeatherService implements IWeatherService {
 
     @Override
     public WeatherPrediction getMaxRainFall() {
-        return this.weatherPredictionsRepository.findMaxWeatherPrediction();
+        return this.weatherPredictionsRepository.findMaxWeatherPredictionRainFall();
     }
 
     @Override
     public long countPeriodsOfWeather(String weather) {
         return this.weatherPredictionsRepository.countPeriodsOfWeather(weather);
+    }
+
+    public void setWeatherPredictionsRepository(WeatherPredictionRepository weatherPredictionsRepository) {
+        this.weatherPredictionsRepository = weatherPredictionsRepository;
     }
 }

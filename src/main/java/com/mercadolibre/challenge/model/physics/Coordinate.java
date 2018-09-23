@@ -1,7 +1,7 @@
 package com.mercadolibre.challenge.model.physics;
 
 /**
- * Created by costanzpa on 15/9/2018.
+ * Created by Pablo Costanzo on 15/9/2018.
  * Models a point in the galaxy.
  *
  */

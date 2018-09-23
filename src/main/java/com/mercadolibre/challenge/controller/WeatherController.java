@@ -39,10 +39,18 @@ public class WeatherController {
 
     @PostMapping(value = "/add", produces = "application/json")
     @ApiOperation("Add a new weather prediction.")
-    @ApiResponses(value = {@ApiResponse(code = 200, message = "Successfully retrieved a weather prediction.", response=WeatherPrediction.class)})
-    ResponseEntity<WeatherPrediction> add(@RequestBody WeatherPrediction weatherPrediction) {
-        weatherService.add(weatherPrediction);
-        return new ResponseEntity(weatherPrediction, HttpStatus.OK);
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "Successfully retrieved a weather prediction.", response=WeatherPrediction.class),
+            @ApiResponse(code = 403, message = "The resource you were trying to add already exists.", response=WeatherPrediction.class)
+    })
+    ResponseEntity<WeatherPrediction> add(@RequestBody WeatherPrediction prediction) {
+        WeatherPrediction weatherPrediction = weatherService.add(prediction);
+        ResponseEntity responseEntity;
+        if (weatherPrediction != null)
+            responseEntity = new ResponseEntity(weatherPrediction, HttpStatus.OK);
+        else
+            responseEntity= new ResponseEntity(weatherPrediction, HttpStatus.FORBIDDEN);
+
+        return responseEntity;
     }
 
     @PutMapping(value = "/update/{id}", produces = "application/json")
