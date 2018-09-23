@@ -8,10 +8,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by costa on 19/9/2018.
- */
-public class Normal extends Weather implements IWeather {
-    //TODO REFACTOR HARDCODE
+ * Created by Pablo Costanzo on 19/9/2018.
+ * Normal day not rainy optimal or drought.
+ * */
+public class Normal extends Weather {
     private static final String STANDARD_WEATHER = "normal";
 
     public Normal() {

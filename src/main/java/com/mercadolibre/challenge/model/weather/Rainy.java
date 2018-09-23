@@ -8,10 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by costa on 17/9/2018.
+ * Created by Pablo Costanzo on 17/9/2018.
+ * Rainy Day
  */
-public class Rainy extends Weather implements IWeather {
-    private static final String RAINY_WEATHER = "lluvia";
+public class Rainy extends Weather {
+    private static final String RAINY_WEATHER = "rainy";
 
     public Rainy() {
         super();

@@ -3,7 +3,8 @@ package com.mercadolibre.challenge.model.entities;
 import com.mercadolibre.challenge.model.physics.Coordinate;
 
 /**
- * Created by costa on 16/9/2018.
+ * Created by Pablo Costanzo on 16/9/2018.
+ * Implement a planet.
  */
 public class Planet extends CelestialBody {
 
